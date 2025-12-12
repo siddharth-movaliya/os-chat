@@ -138,7 +138,7 @@ The system consists of multiple layers working together to provide a seamless, s
 ### Step 1: Clone the Repository
 
 ```bash
-git clone <repository-url>
+git clone https://github.com/siddharth-movaliya/os-chat
 cd os-chat
 ```
 
