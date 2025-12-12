@@ -1,16 +1,17 @@
-export type Message = {
+export type TMessage = {
   id: string;
   text: string;
   timestamp: string;
   isSent: boolean;
 };
 
-export type Chat = {
+export type TChat = {
   id: string;
   name: string;
   avatar: string;
   lastMessage: string;
   timestamp: string;
+  lastMessageTime?: Date;
   unread?: number;
-  messages: Message[];
+  messages: TMessage[];
 };

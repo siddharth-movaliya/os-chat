@@ -1,0 +1,20 @@
+{
+  "name": "@repo/prisma",
+  "types": "./index.ts",
+  "exports": {
+    ".": "./index.ts",
+    "./client": "./generated/prisma/client.ts"
+  },
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "docker compose up --build"
+  },
+  "devDependencies": {
+    "@types/node": "^25.0.0",
+    "prisma": "^7.0.1"
+  },
+  "dependencies": {
+    "@prisma/client": "^7.0.1"
+  }
+}
