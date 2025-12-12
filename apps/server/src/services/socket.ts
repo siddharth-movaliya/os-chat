@@ -36,7 +36,7 @@ class SocketService {
 
     console.log(process.env.NEXT_PUBLIC_BASE_URL);
     const JWKS = createRemoteJWKSet(
-      new URL(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/jwks`)
+      new URL(`${process.env.NEXT_PUBLIC_BASE_URL}/api/auth/jwks`),
     );
 
     // Socket auth middleware
@@ -149,7 +149,7 @@ class SocketService {
         } catch (error) {
           console.error(
             `Error handling user disconnect for ${user.id}:`,
-            error
+            error,
           );
         }
       });
@@ -159,7 +159,7 @@ class SocketService {
         "message:send",
         async (
           { toUserId, message }: { toUserId: string; message: string },
-          callback?: (response: { success: boolean; error?: string }) => void
+          callback?: (response: { success: boolean; error?: string }) => void,
         ) => {
           try {
             const timestamp = Date.now();
@@ -191,7 +191,7 @@ class SocketService {
               });
             }
           }
-        }
+        },
       );
 
       // Chat handler (legacy support - remove if not used)
@@ -214,7 +214,7 @@ class SocketService {
             toUserId: string;
             friendRequest: TFriendRequestWithSender;
           },
-          callback?: (response: { success: boolean; error?: string }) => void
+          callback?: (response: { success: boolean; error?: string }) => void,
         ) => {
           try {
             this._io.to(toUserId).emit("friend_request:received", {
@@ -233,7 +233,7 @@ class SocketService {
               });
             }
           }
-        }
+        },
       );
 
       // Friend request response handler
@@ -249,7 +249,7 @@ class SocketService {
             requestId: string;
             accept: boolean;
           },
-          callback?: (response: { success: boolean; error?: string }) => void
+          callback?: (response: { success: boolean; error?: string }) => void,
         ) => {
           try {
             if (accept) {
@@ -285,7 +285,7 @@ class SocketService {
               });
             }
           }
-        }
+        },
       );
     });
   }

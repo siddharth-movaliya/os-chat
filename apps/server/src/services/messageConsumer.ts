@@ -52,7 +52,7 @@ class MessageConsumer {
         `✓ Message saved to DB [partition: ${partition}]`,
         messageData.senderId.slice(0, 8),
         "→",
-        messageData.receiverId.slice(0, 8)
+        messageData.receiverId.slice(0, 8),
       );
 
       // Commit offset after successful processing

@@ -100,7 +100,7 @@ class KafkaService {
       ];
 
       const topicsToCreate = requiredTopics.filter(
-        (t) => !topics.includes(t.topic)
+        (t) => !topics.includes(t.topic),
       );
 
       if (topicsToCreate.length > 0) {
@@ -109,7 +109,7 @@ class KafkaService {
         });
         console.log(
           "✓ Kafka topics created:",
-          topicsToCreate.map((t) => t.topic)
+          topicsToCreate.map((t) => t.topic),
         );
       }
 
