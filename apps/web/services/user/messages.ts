@@ -5,35 +5,6 @@ import { auth } from '@/lib/auth';
 import { headers } from 'next/headers';
 import { Message } from '@repo/prisma/client';
 
-// Function to send a message
-export async function sendMessage(
-  receiverId: string,
-  content: string
-): Promise<Message> {
-  try {
-    const session = await auth.api.getSession({
-      headers: await headers(),
-    });
-
-    const userId = session?.user?.id;
-    if (!userId) {
-      throw new Error('User not authenticated');
-    }
-
-    const message = await prisma.message.create({
-      data: {
-        senderId: userId,
-        receiverId,
-        content,
-      },
-    });
-
-    return message;
-  } catch (error) {
-    throw new Error(`Failed to send message: ${error}`);
-  }
-}
-
 // Function to get messages between two users
 export async function getMessages(otherUserId: string): Promise<Message[]> {
   try {

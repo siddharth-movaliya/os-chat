@@ -1,5 +1,6 @@
 {
   "name": "@repo/prisma",
+  "type": "module",
   "types": "./index.ts",
   "exports": {
     ".": "./index.ts",

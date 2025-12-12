@@ -3,6 +3,7 @@ import { Server } from "socket.io";
 import { createAdapter } from "@socket.io/redis-adapter";
 import { createRemoteJWKSet, jwtVerify } from "jose";
 import type { TFriendRequestWithSender, TUser } from "../types/user/index.js";
+import KafkaService from "./kafka.js";
 import dotenv from "dotenv";
 dotenv.config();
 
@@ -12,6 +13,7 @@ const sub = new Redis(REDIS_URL);
 
 class SocketService {
   private _io: Server;
+  private kafkaService: KafkaService;
   private userPresence: Map<
     string,
     { socketId: string; status: "online" | "offline" }
@@ -29,6 +31,8 @@ class SocketService {
 
     // Integrate Redis adapter for scaling
     this._io.adapter(createAdapter(pub, sub));
+
+    this.kafkaService = new KafkaService();
 
     console.log(process.env.NEXT_PUBLIC_BASE_URL);
     const JWKS = createRemoteJWKSet(
@@ -64,6 +68,11 @@ class SocketService {
         next(new Error("Unauthorized"));
       }
     });
+  }
+
+  public async initializeKafka(): Promise<void> {
+    await this.kafkaService.connect();
+    await this.kafkaService.ensureTopicsExist();
   }
 
   public initListeners(): void {
@@ -145,7 +154,47 @@ class SocketService {
         }
       });
 
-      // Chat handler
+      // Message handler - now publishes to Kafka instead of direct DB write
+      socket.on(
+        "message:send",
+        async (
+          { toUserId, message }: { toUserId: string; message: string },
+          callback?: (response: { success: boolean; error?: string }) => void
+        ) => {
+          try {
+            const timestamp = Date.now();
+
+            // Publish to Kafka
+            await this.kafkaService.publishMessage({
+              senderId: user.id,
+              receiverId: toUserId,
+              content: message,
+              timestamp,
+            });
+
+            // Emit to recipient in real-time (if online)
+            this._io.to(toUserId).emit("message:received", {
+              fromUserId: user.id,
+              message,
+              timestamp,
+            });
+
+            if (callback) {
+              callback({ success: true });
+            }
+          } catch (error) {
+            console.error("Error handling message:", error);
+            if (callback) {
+              callback({
+                success: false,
+                error: error instanceof Error ? error.message : "Unknown error",
+              });
+            }
+          }
+        }
+      );
+
+      // Chat handler (legacy support - remove if not used)
       socket.on("chat:send_dm", ({ toUserId, message }) => {
         this._io.to(toUserId).emit("chat:receive_dm", {
           fromUserId: user.id,
@@ -247,6 +296,11 @@ class SocketService {
 
   public getUserPresence(userId: string) {
     return this.userPresence.get(userId);
+  }
+
+  public async shutdown(): Promise<void> {
+    await this.kafkaService.disconnect();
+    this._io.close();
   }
 }
 

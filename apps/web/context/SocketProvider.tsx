@@ -170,10 +170,9 @@ export const SocketProvider: React.FC<ISocketProviderProps> = ({
   const sendMessage = useCallback(
     (toUserId: string, message: string) => {
       if (socket && isConnected) {
-        socket.emit('chat:send_dm', {
+        socket.emit('message:send', {
           toUserId: toUserId,
           message: message,
-          timestamp: Date.now(),
         });
       } else {
         console.warn('Socket is not connected. Cannot send message.');
@@ -253,8 +252,8 @@ export const SocketProvider: React.FC<ISocketProviderProps> = ({
         timestamp: number;
       }) => void
     ) => {
-      socket.off('chat:receive_dm'); // Prevent duplicate listeners
-      socket.on('chat:receive_dm', callback);
+      socket.off('message:received'); // Prevent duplicate listeners
+      socket.on('message:received', callback);
     },
     [socket]
   );
@@ -267,7 +266,7 @@ export const SocketProvider: React.FC<ISocketProviderProps> = ({
         timestamp: number;
       }) => void
     ) => {
-      socket.off('chat:receive_dm', callback);
+      socket.off('message:received', callback);
     },
     [socket]
   );

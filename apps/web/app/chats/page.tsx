@@ -7,7 +7,6 @@ import { TChat, TMessage } from '@/types/chat';
 import { getFriends } from '@/services/user/friendships';
 import {
   getMessages,
-  sendMessage,
   markMessagesAsRead,
   getUnreadCounts,
   getLastMessages,
@@ -49,19 +48,12 @@ export default function Page() {
     activeChatIdRef.current = activeChatId;
   }, [activeChatId]);
 
-  // Handle message sent from ChatArea
+  // Handle message sent from ChatArea - no DB write needed, Kafka handles it
   const handleMessageSent = async (
     chatId: string,
     message: string,
     timestamp: number
   ) => {
-    // Persist to database
-    try {
-      await sendMessage(chatId, message);
-    } catch (error) {
-      console.error('Failed to send message:', error);
-    }
-
     const newMessage = {
       id: `${session?.user?.id}-${timestamp}`,
       text: message,
