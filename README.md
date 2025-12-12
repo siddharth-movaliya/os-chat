@@ -2,7 +2,7 @@
 
 A production-ready, horizontally scalable chat application built as a distributed system. This project demonstrates key principles of distributed systems architecture including horizontal scalability, fault tolerance, and real-time data consistency across distributed components.
 
-## 📋 Table of Contents
+## Table of Contents
 
 - [Project Overview](#project-overview)
 - [Architecture Overview](#architecture-overview)
@@ -334,7 +334,7 @@ To see the distributed system in action:
 3. Check `User` table for registered users
 4. View `Friendship` and `FriendRequest` tables
 
-## 📊 Monitoring & Observability
+## Monitoring & Observability
 
 ### Kafka UI (http://localhost:8080)
 
@@ -496,7 +496,7 @@ os-chat/
 - **Next.js**: https://nextjs.org/docs
 - **Distributed Systems**: "Designing Data-Intensive Applications" by Martin Kleppmann
 
-## 📝 License
+## License
 
 This project is for educational purposes.
 
