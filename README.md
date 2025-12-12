@@ -15,7 +15,7 @@ A production-ready, horizontally scalable chat application built as a distribute
 - [Scaling the System](#scaling-the-system)
 - [Troubleshooting](#troubleshooting)
 
-## 🎯 Project Overview
+## Project Overview
 
 This project implements a scalable chat application designed as a distributed system that allows users connected to different servers to communicate seamlessly while each server independently handles its local users.
 
@@ -30,7 +30,7 @@ This project implements a scalable chat application designed as a distributed sy
 - **Friend System**: Add friends and manage friend requests
 - **Authentication**: Secure authentication using Better-Auth
 
-## 🏗️ Architecture Overview
+## Architecture Overview
 
 The system consists of multiple layers working together to provide a seamless, scalable chat experience:
 
@@ -99,7 +99,7 @@ The system consists of multiple layers working together to provide a seamless, s
   - Automatic reconnection and fallback mechanisms
   - Room-based messaging for efficient delivery
 
-## 🛠️ Technology Stack
+## Technology Stack
 
 ### Frontend
 
@@ -126,14 +126,14 @@ The system consists of multiple layers working together to provide a seamless, s
 - **Turborepo**: Monorepo build system
 - **pnpm**: Fast, disk-efficient package manager
 
-## 💻 System Requirements
+## System Requirements
 
 - **Node.js**: v18 or higher
 - **pnpm**: v9.0.0 (will be installed automatically if not present)
 - **Docker**: Latest version (for running PostgreSQL, Redis, Kafka, Zookeeper)
 - **Docker Compose**: Included with Docker Desktop
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Step 1: Clone the Repository
 
@@ -294,7 +294,7 @@ To see the distributed system in action:
 5. Redis pub/sub ensures all servers receive messages
 6. Kafka ensures messages are never lost
 
-## 🧪 Testing the Application
+## Testing the Application
 
 ### Manual Testing
 
@@ -386,7 +386,7 @@ const requiredTopics = [
 
 More partitions = more parallel processing = higher throughput
 
-## 🐛 Troubleshooting
+## Troubleshooting
 
 ### Docker Services Won't Start
 
@@ -445,7 +445,7 @@ npm install -g pnpm
 npx pnpm install
 ```
 
-## 🏆 Key Distributed System Concepts Demonstrated
+## Key Distributed System Concepts Demonstrated
 
 1. **Horizontal Scalability**: Add more servers without code changes
 2. **Message Queue Pattern**: Kafka decouples producers and consumers
@@ -456,7 +456,7 @@ npx pnpm install
 7. **Load Balancing**: Distribute connections across multiple servers
 8. **Consumer Groups**: Multiple consumers share workload
 
-## 📚 Project Structure
+## Project Structure
 
 ```
 os-chat/
@@ -487,7 +487,7 @@ os-chat/
 └── package.json         # Root package.json
 ```
 
-## 🎓 Learning Resources
+## Learning Resources
 
 - **Kafka**: https://kafka.apache.org/documentation/
 - **Redis Pub/Sub**: https://redis.io/topics/pubsub
